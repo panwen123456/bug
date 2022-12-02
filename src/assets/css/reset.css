@@ -1,0 +1,33 @@
+input {
+  border: 0;
+  outline: none;
+  padding: 16px 0;
+}
+
+a, a:hover {
+  text-decoration: none;
+}
+
+fieldset {
+  border: 0;
+}
+
+ol, p {
+  padding: 0;
+  margin: 0;
+}
+
+ol {
+  list-style-type: none;
+}
+
+/* 修改进度条的样式 
+ 效果js动态生成的，不在样式的作用域内
+ 处理：不要作用域
+*/
+#nprogress .bar {
+  background-color: rgba(237, 91, 0, 0.5);
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px rgba(237, 91, 0, 0.5), 0 0 5px rgba(237, 91, 0, 0.5);
+}
