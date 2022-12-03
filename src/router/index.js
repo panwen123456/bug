@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue'
 const MiLogin = () => import('../components/MiLogin')
 const MiHome = () => import('../components/MiHome')
 const MiCategory = () => import('../components/MiCategory')
-const MiCart = () => import('../components/MiCart')
+const MiCart = () => import('../components/MiCart.vue')
 const MiUser = () => import('../components/MiUser')
 const MiList = () => import('../components/MiList')
 const MiDetail = () => import('../components/MiDetail')

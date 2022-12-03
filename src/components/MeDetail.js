@@ -72,6 +72,7 @@ export default {
     },
     setProductData(res) {
       this.$NProgress.done()
+      this.$store.commit('setViewLoading', false)
       let data = res.data
       let viewContent = data.view_content
       console.log(viewContent)
