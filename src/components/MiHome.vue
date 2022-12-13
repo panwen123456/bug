@@ -52,12 +52,8 @@
 <script>
 import Swiper from "swiper";
 import fetch from '../api/fetch'
-import TheFooter from  './TheFooter.vue'
 
 export default {
-  components: {
-    TheFooter
-  },
   data() {
     return {
       navList: null,

@@ -109,6 +109,7 @@ import {
   buy_option, 
   goods_info
 } from '@/mock/sku.js'
+import {mapMutations} from 'vuex'
 export default {
   props: {
     showSKU: {
@@ -143,6 +144,10 @@ export default {
     this.init()
   },
   methods: {
+    ...mapMutations({
+      //映射添加购物车数量方法
+      addCartCount: 'cart/addCount'
+    }),
     init() {
       //实际业务真实数据
       // let productData = JSON.parse(JSON.stringify(this.productData))
@@ -228,7 +233,8 @@ export default {
       })
     },
     addToCart () {
-      // todo:放到购物车模块实现
+      // todo:放到购物车模块实现:购物车数量
+      this.addCartCount(this.selectedGood.buyNumber)
       this.closeSKU()
     },
     //向父组件传递信息

@@ -8,12 +8,15 @@
         <!-- 索引与当前页面相等则获取到聚集状态，否则则是普通状态 -->
         <i class="iconfont" :class="nav.link == $route.name ? nav.iconon : nav.icon"></i>
         <span>{{ nav.name }}</span>
+        <!-- 购物车为0时不显示 -->
+        <em v-if="nav.link=='cart'&&count" class="bubble">{{count}}</em>
       </router-link>
     </div>
   </footer>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import bus from '../bus'
 //将页面结构抽象成一个静态数据
 const navigation = [
@@ -51,6 +54,9 @@ export default {
       footerVisible: true
     }
   },
+  computed: mapState({
+    count: state => state.cart.count
+  }),
   created() {
     bus.$on('footerVisible', (val) => {
       this.footerVisible = val
@@ -59,7 +65,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="stylus">
 .app-shell-footer {
   position: fixed;
   z-index: 9999;
@@ -104,6 +110,25 @@ export default {
 
 .on {
   color: #ff6700;
+}
+
+.bubble {
+  position: absolute;
+  min-width: 14px;
+  line-height: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  padding: 0 3px;
+  font-size: 10px;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 10px;
+  background: #ed4d41;
+  color: #fff;
+  top: 0;
+  /* left: 50%; */
+  transform: translate3d(40px,2px,0);
+  font-style: normal;
 }
 </style>
 

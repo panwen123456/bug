@@ -763,3 +763,63 @@ footer .action-box .buy-btn {
 .sku-leave-to {
   transform: translateY(100%);
 }
+/* 地址pop */
+.pop .h1 {
+  color: rgba(0,0,0,.87);
+  font-size: 16px;
+  text-align: center;
+  padding: 12px 0;
+}
+.max5 {
+  max-height: 300px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.pop .address-item {
+  text-align: left;
+  padding: 8px 0;
+}
+.pop .address-item-line1 {
+  font-size: 16px;
+  color: rgba(0,0,0,.87);
+  line-height: 20px;
+}
+.pop .address-item-line1 .address-item-name {
+  margin-right: 5px;
+}
+.pop .address-item-line2 {
+  font-size: 14px;
+  color: rgba(0,0,0,.54);
+  padding-left: 22px;
+}
+.pop .btn-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.icon-locationfill {
+  font-size: 14px;
+  margin-right: 8px;
+}
+.border-bottom-1px:before {
+  transform:  scaleY(0.2);
+}
+.bubble {
+  position: absolute;
+  min-width: 14px;
+  line-height: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  padding: 0 3px;
+  font-size: 10px;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 10px;
+  background: #ed4d41;
+  color: #fff;
+  top: 0;
+  /* left: 50%; */
+  transform: translate3d(40px,2px,0);
+  font-style: normal;
+}

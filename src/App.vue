@@ -16,7 +16,7 @@
 </template>
 <script>
 import MiSkeleton from './components/MiSkeleton.vue'
-import {mapState, mapMutations} from 'vuex'
+import {mapState, mapMutations, mapActions} from 'vuex'
 //公共组件需要放置在App.vue中
 export default {
   components: {
@@ -45,10 +45,17 @@ export default {
       }
     }
   },
-
+  created() {
+    this.getUserInfo()
+    this.getCount()
+  },
   methods: {
     //映射方法
     ...mapMutations(['setTransitionName']),
+    ...mapActions({
+      getUserInfo: 'getUserInfo',
+      getCount: 'cart/getCount'
+    }),
     //添加过渡钩子,向左切换
     afterLeave() {
       this.setTransitionName('page-left')

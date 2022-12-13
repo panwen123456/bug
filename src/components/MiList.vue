@@ -1,6 +1,6 @@
 <template>
   <div class="app-shell">
-    <MiSearch title="商品列表"/>
+    <MiTitle title="商品列表"/>
     <div class="app-view-wrapper">
       <div class="app-view app-view-with-header app-view-with-footer">
         <ol>
@@ -32,17 +32,14 @@
 </template>
 
 <script>
-import MiSearch from './MiSearch.vue'
 import MiRecommend from './MiRecommend.vue'
 import fetch from '../api/fetch'
 //添加防范xxs攻击插件
 import DOMPurify from 'dompurify'
-import TheFooter from  './TheFooter.vue'
+
 export default {
   components: {
-    MiSearch,
     MiRecommend,
-    TheFooter
   },
   data() {
     return {

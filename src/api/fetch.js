@@ -1,6 +1,6 @@
 import axios from "axios"
 import url from './index'
-import mock from '../mock'
+
 
 function fetch(api, data) {
   return new Promise((resolve, reject) => {
@@ -9,8 +9,14 @@ function fetch(api, data) {
       resolve(res.data)
     }).catch(err => {
       //无网络时本地异常处理
-      console.error(err)
-      resolve(mock[api])
+      if(process.env.NODE_ENV === 'production') {
+        reject(err)
+      } else {
+        //只在开发的环境下进行mock处理
+        console.error(err)
+        let mock = require('../mock/index.js')
+        resolve(mock[api])
+      }
     })
   })
 }

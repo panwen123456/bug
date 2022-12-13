@@ -8,6 +8,12 @@ const MiCart = () => import('../components/MiCart.vue')
 const MiUser = () => import('../components/MiUser')
 const MiList = () => import('../components/MiList')
 const MiDetail = () => import('../components/MiDetail')
+const MiSetting = () => import('../components/MiSetting')
+const MiAddressList = () => import('../components/MiAddressList')
+const MiAddressEdit = () => import('../components/MiAddressEdit')
+const OrderCheckout = () => import(/* webpackChunkName: "orderCheckout" */ '../components/OrderCheckout.vue')
+const OrderList = () => import(/* webpackChunkName: "orderList" */ '../components/OrderList.vue')
+const OrderView = () => import(/* webpackChunkName: "orderView" */ '../components/OrderView.vue')
 
 //路由懒加载,异步加载形式
 Vue.use(VueRouter)
@@ -53,7 +59,8 @@ const routes = [
     name: 'cart',
     component: MiCart,
     meta: {
-      index: 2
+      index: 2,
+      // requiresAuth: true
     }
   },
   {
@@ -73,11 +80,61 @@ const routes = [
     path: '/commodity/detail/:id',
     name: 'detail',
     component: MiDetail
-  }
+  },
+  {
+    path: '/user/set',
+    name: 'set',
+    component: MiSetting,
+    meta: {
+      //设置登录路由权限
+      // requiresAuth: true
+    }
+  },
+  {
+    path: '/address/list',
+    name: 'addressList',
+    component: MiAddressList,
+    meta: {
+      //设置登录路由权限
+      // requiresAuth: true
+    }
+  },
+  {
+    path: '/address/edit',
+    name: 'addressEdit',
+    component: MiAddressEdit,
+    meta: {
+      //设置登录路由权限
+      // requiresAuth: true
+    }
+  },
+  {
+    path: '/order/checkout',
+    name: 'orderCheckout',
+    component: OrderCheckout,
+    meta: {
+      // requiresAuth: true
+    }
+  },
+  {
+    path: '/order/list',
+    name: 'orderList',
+    component: OrderList,
+    meta: {
+      // requiresAuth: true
+    }
+  },
+  {
+    path: '/order/view/:id',
+    name: 'orderView',
+    component: OrderView
+  },
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  //解决路由回退跳转时前面加的哈希#
+  mode: 'history'
 })
 
 export default router

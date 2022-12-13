@@ -81,6 +81,11 @@ import md5 from 'js-md5';
         isLoading: false
       }
     },
+    created() {
+    //设置加载状态和进度条
+    this.$store.commit('setViewLoading', false)
+    this.$NProgress.done()
+    },
     computed: {
       mainBtn() {
         return this.isSmsLogin ? '立即登录注册' : '登录'
@@ -187,16 +192,23 @@ import md5 from 'js-md5';
 
    
         this.$fetch('login', data).then(res => {
-          let status = res.data.status
+          //此处登录状态为res.status
+          let status = res.status
           if(status === 200) {
             //todo: 跳转到登录页面
-            console.log('跳转到登录页面')
+            //console.log('跳转到登录页面')
+            this.$fetch('userInfo').then(res => {
+              this.$store.commit('setUserInfo', res.data.user)
+              //识别登录的来源,若为空跳转到登录中心
+              let path = this.$route.query.redirect || '/user'
+              this.$router.push(path)
+            })
           } else {
-            this.errMsg = message
-            this.isLoading = false
+            this.errMsg = res.data.message
           }
+          this.isLoading = false
         }).catch(err => {
-          console.err(err)
+          console.error(err)
           this.isLoading = false
         }) 
       },
@@ -224,6 +236,8 @@ import md5 from 'js-md5';
   padding: 0 28px;
   box-sizing: border-box;
   position: relative;
+  /* 防止reset里的样式覆盖 */
+  display: block;
 }
 .header_til {
   padding: 30px 0 10px;

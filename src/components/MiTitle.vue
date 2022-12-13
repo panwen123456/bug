@@ -10,7 +10,7 @@
     </div>
     <div class="app-header-right">
       <a class="app-header-item">
-        <i class="iconfont icon-search"></i>
+        <i v-if="showSearchIcon" class="iconfont icon-search"></i>
       </a>
     </div>
   </header>
@@ -24,6 +24,10 @@ export default {
       type: String,
       default: ''
     },
+    showSearchIcon: {
+      type: Boolean,
+      default: true
+    }
   }
 }
 </script>

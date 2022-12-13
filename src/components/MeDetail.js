@@ -7,12 +7,17 @@ import MiRecommend from '../components/MiRecommend'
 import MiSKU from '../components/MiSKU'
 import bus from "@/bus";
 import { valid } from "mockjs";
+import MiPop from '../components/MiPop'
+import { mapState, mapGetters, mapActions } from "vuex";
+import MiAddressAll from '../components/MiAddressAll'
 
 export default {
   components: {
     MiComment,
     MiRecommend,
-    MiSKU
+    MiSKU,
+    MiPop,
+    MiAddressAll
   },
   data() {
     return {
@@ -28,8 +33,21 @@ export default {
       //遮罩层和sku弹框
       showMask: false,
       showSKU: false,
-      selectedGood: {}
+      selectedGood: {},
+      showAddressPop: false,
+      deliveryData: null,
+      showRegions: false
     }
+  },
+  computed:{
+    ...mapGetters({
+      isLogin: 'isLogin',
+      addressDefault: 'address/default'
+    }),
+    ...mapState({
+      addressList: state => state.address.list,
+      count: state => state.cart.count
+    })
   },
   beforeRouteEnter(to, from, next) {
     bus.$emit('footerVisible', false)
@@ -47,9 +65,31 @@ export default {
     bus.$emit('footerVisible', true)
     next()
   },
-  //创建时获取路由id
+  //创建时登录状态获取地址,异步数据处理完后判断获取默认地址,根据地址查询位置
   created() {
-    this.id = this.$route.params.id
+    if(this.isLogin) {
+      this.getAddressList(() => {
+        if(this.addressDefault) {
+          this.$fetch('estDelivery', {
+            address_id: this.addressDefault.address_id
+          }).then(res => {
+            this.deliveryData = res.data
+          })
+        }
+      })
+    } else {
+      //未登录时根据经纬度查询
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.$fetch('estDelivery', {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          }).then(res => {
+            this.deliveryData = res.data
+          })
+        })
+      }
+    }
   },
   destoryed() {
     //判断Swiper实例是否是数组再销毁
@@ -63,6 +103,9 @@ export default {
     this.$NProgress.remove();
   },
   methods: {
+    ...mapActions({
+      getAddressList: 'address/getList'
+    }),
     getProductData() {
       this.$fetch('productView', {
         commodity_id: this.$route.params.id
@@ -127,6 +170,20 @@ export default {
     //子组件触发事件，父组件监听到事件传递过来
     selectSKU(val) {
       this.selectedGood = val
+    },
+    selectAddress(item) {
+      this.$fetch('estDelivery', {
+        address_id: this.addressDefault.address_id
+      }).then(res => {
+        this.deliveryData = res.data
+        this.showAddressPop = false
+      })
+    },
+    changeRegion(region) {
+      let {province_id, city_id, district_id, area_id} = region
+      this.$fetch('estDelivery',{province_id, city_id, district_id, area_id}).then(res => {
+        this.deliveryData = res.data
+      })
     }
   }
 }

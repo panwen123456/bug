@@ -31,7 +31,16 @@ router.beforeEach((to, from, next) => {
   store.commit('setViewLoading', true)
   //无论路由切换还是刷新都启动
   NProgress.start()
-  next()
+  //当跳转的路由需要权限，同时未登录,则跳转到登录界面
+  if(to.meta.requiresAuth && !store.getters.isLogin) {
+    next({
+      name: 'login',
+      //添加跳转目的，跳转到哪的再跳转回去
+      query: {redirect: to.fullPath}
+    })
+  } else {
+    next()
+  }
 })
 new Vue({
   router,
